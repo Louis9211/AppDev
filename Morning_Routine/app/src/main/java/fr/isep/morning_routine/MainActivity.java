@@ -4,7 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,5 +51,16 @@ public class MainActivity extends AppCompatActivity {
 
         tasksToDoAdapter.setTasksToDo(tasksToDoList);
 
+        FloatingActionButton floatingActionButton = findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(v -> showTodoDialog());
+
+
+    }
+
+    protected void showTodoDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.todo_dialog);
+        dialog.show();
     }
 }
