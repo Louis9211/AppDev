@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Morning_Routine</string>
+    <string name="add_todo_title">Ajouter une tâche à ta routine !</string>
+    <string name="add_todo_name_placeholder">Nom de la tâche</string>
+    <string name="add_todo_duration_placeholder">Durée de la tâche</string>
+    <string name="add_todo_add_button">Ajouter</string>
 </resources>

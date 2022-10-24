@@ -7,19 +7,18 @@ import android.widget.CheckBox;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import fr.isep.morning_routine.MainActivity;
 import fr.isep.morning_routine.Model.TasksToDoModel;
 import fr.isep.morning_routine.R;
 
 public class TasksToDoAdapter extends RecyclerView.Adapter<TasksToDoAdapter.ViewHolder> {
 
     private List<TasksToDoModel> tasksToDoList;
-    private MainActivity mainActivity;
 
-    public TasksToDoAdapter(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    public TasksToDoAdapter() {
+        this.tasksToDoList = new ArrayList<>();
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -42,6 +41,13 @@ public class TasksToDoAdapter extends RecyclerView.Adapter<TasksToDoAdapter.View
     //Set tasks in list
     public void setTasksToDo(List<TasksToDoModel> tasksToDoList){
         this.tasksToDoList = tasksToDoList;
+        //in order to update the recyclerView
+        notifyDataSetChanged();
+    }
+
+    //Add tasks in list
+    public void addTaskToDo(TasksToDoModel tasksToDoList){
+        this.tasksToDoList.add(tasksToDoList);
         //in order to update the recyclerView
         notifyDataSetChanged();
     }

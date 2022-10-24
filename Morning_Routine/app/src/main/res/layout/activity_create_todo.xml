@@ -1,55 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minHeight="500dp"
-    android:minWidth="250dp"
-    android:padding="10dp"
-    >
+    android:padding="20dp"
+    tools:context=".CreateTodoActivity">
 
-    <EditText
+    <TextView
         android:id="@+id/editTextTextPersonName"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:ems="20"
-        android:inputType="textPersonName"
-        android:text="Ajouter une tâche à ta routine !"
+        android:text="@string/add_todo_title"
         android:textAlignment="center"
         android:textStyle="bold"
+        android:textColor="@color/design_default_color_primary"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText"
+    <EditText
+        android:id="@+id/newTodoName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:hint="Nom de la tâche"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
-        tools:layout_editor_absoluteX="0dp" />
+        android:autofillHints="name"
+        android:hint="@string/add_todo_name_placeholder"
+        android:inputType="text"
+        android:paddingHorizontal="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <EditText
         android:id="@+id/newTodoDuration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:hint="Durée de la tâche"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText"
-        tools:layout_editor_absoluteX="0dp" />
+        android:autofillHints="time"
+        android:hint="@string/add_todo_duration_placeholder"
+        android:inputType="time"
+        android:paddingHorizontal="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newTodoName" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/newToDoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="Ajouter"
+        android:text="@string/add_todo_add_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newTodoDuration" />

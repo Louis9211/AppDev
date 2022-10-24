@@ -13,6 +13,13 @@
         android:theme="@style/Theme.Morning_Routine"
         tools:targetApi="31">
         <activity
+            android:name=".CreateTodoActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".WelcomeActivity"
             android:exported="true">
             <intent-filter>
