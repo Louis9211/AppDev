@@ -1,7 +1,9 @@
 package fr.isep.morning_routine.Model;
 
+import java.io.Serializable;
+
 //Define the structure of individual tasks
-public class TasksToDoModel {
+public class TasksToDoModel implements Serializable {
 
     private int id;
     private int status;

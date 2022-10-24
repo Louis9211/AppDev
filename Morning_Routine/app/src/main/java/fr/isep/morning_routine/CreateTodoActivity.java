@@ -1,10 +1,10 @@
 package fr.isep.morning_routine;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -16,21 +16,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import fr.isep.morning_routine.Adapter.TasksToDoAdapter;
 import fr.isep.morning_routine.Model.TasksToDoModel;
 
 
 public class CreateTodoActivity extends AppCompatActivity {
-
-    private RecyclerView tasksToDoRecyclerView;
-    private TasksToDoAdapter tasksToDoAdapter;
-    private List<TasksToDoModel> tasksToDoList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,64 +31,57 @@ public class CreateTodoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_todo);
         getSupportActionBar().hide();
 
-        tasksToDoList = new ArrayList<>();
-
         Button newTodoButton = findViewById(R.id.newToDoButton);
-        newTodoButton.setOnClickListener(v -> onSubmitForm());
+        newTodoButton.setOnClickListener(v -> {
+            try {
+                onSubmitForm();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
-    private void onSubmitForm() {
+    private void onSubmitForm() throws IOException {
         EditText nameInput = findViewById(R.id.newTodoName);
         EditText durationInput = findViewById(R.id.newTodoDuration);
         String taskName = ConvertToString(nameInput);
         String taskDuration = ConvertToString(durationInput);
+
         if (taskName.length() != 0) {
             System.out.println("Champ name rempli");
-            tasksToDoRecyclerView = findViewById(R.id.tasksRecyclerView);
-            tasksToDoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            tasksToDoAdapter = new TasksToDoAdapter();
-            //Set the adapter to the recyclerView
-            tasksToDoRecyclerView.setAdapter(tasksToDoAdapter);
-            TasksToDoModel tasksToDO = new TasksToDoModel();
-            addTaskToList(tasksToDO, taskName, taskDuration);
-            System.out.println(tasksToDoList);
+
+            TasksToDoModel tasksTodo = new TasksToDoModel();
+            tasksTodo.setStatus(0);
+            tasksTodo.setTask(taskName);
+            tasksTodo.setId(10);
+            storeToDoTask(tasksTodo);
+            Intent intent = new Intent();
+            intent.putExtra("newTask", ObjectSerializer.serialize(tasksTodo));
+            setResult(RESULT_OK,intent);
+            finish();
         } else {
             //TODO : display Popup here
         }
-        finish();
     }
 
-    private void storeToDoTasks(){
+    private void storeToDoTask(TasksToDoModel taskToAppend) throws IOException {
         SharedPreferences sharedPref = getSharedPreferences("application", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        //Set the values
-        Set<TasksToDoModel> set = new HashSet<TasksToDoModel>();
-        set.addAll(tasksToDoList);
-        //TODO : resoudre erreur set
-        //editor.putStringSet("key", set);
-        editor.commit();
+        Set<String> stringSet = sharedPref.getStringSet("tasks", new HashSet<>());
+
+        Set<String> newStringSet = new HashSet<String>(stringSet);
+        newStringSet.add(ObjectSerializer.serialize(taskToAppend));
+
+        editor.putStringSet("tasks", newStringSet);
+        editor.apply();
     }
 
-    private void addTaskToList(TasksToDoModel tasksToDo, String name, String duration) {
-        tasksToDo.setTask(name);
-        //tasksToDo.setDuration(duration);
-        tasksToDo.setStatus(0);
-        tasksToDo.setId(1);
-        tasksToDoList.add(tasksToDo);
-        tasksToDoAdapter.setTasksToDo(tasksToDoList);
-    }
 
     //Convert Edittext to String
     private String ConvertToString(EditText text) {
         return text.getText().toString();
     }
 
-    void saveToDoTasks(EditText text, String key) {
-        SharedPreferences sharedPref = getSharedPreferences("application", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(key, text.getText().toString());
-        editor.apply();
-    }
 
     //Display when nothing is written and user try to add task.
     public void onErrorShowPopupClick(View view) {
@@ -125,4 +111,5 @@ public class CreateTodoActivity extends AppCompatActivity {
         });
 
     }
+
 }

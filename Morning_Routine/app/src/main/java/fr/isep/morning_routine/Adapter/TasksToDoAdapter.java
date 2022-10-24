@@ -7,6 +7,7 @@ import android.widget.CheckBox;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
