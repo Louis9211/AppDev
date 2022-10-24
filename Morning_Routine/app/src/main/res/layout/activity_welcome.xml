@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="200dp"
-        android:text="Heyoo"
+        android:text="@string/add_app_name"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="50dp" />
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="170dp"
-        android:text="Morning Routine"
+        android:text="@string/add_UnderTitle"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="20dp" />

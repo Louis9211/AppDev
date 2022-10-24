@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         tasksToDoList.add(tasksToDO);
         tasksToDoList.add(tasksToDO);
         tasksToDoList.add(tasksToDO);
-        tasksToDoList.add(tasksToDO);
 
         tasksToDoAdapter.setTasksToDo(tasksToDoList);
 

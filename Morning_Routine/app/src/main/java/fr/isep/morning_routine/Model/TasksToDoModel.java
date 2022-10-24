@@ -6,6 +6,11 @@ public class TasksToDoModel {
     private int id;
     private int status;
     private String task;
+    //private String duration;
+
+    //public String getDuration() {return duration;}
+
+    //public void setDuration(String duration) { this.duration = duration;}
 
     public int getId() {
         return id;
