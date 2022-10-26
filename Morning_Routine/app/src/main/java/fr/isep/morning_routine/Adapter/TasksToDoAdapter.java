@@ -1,5 +1,7 @@
 package fr.isep.morning_routine.Adapter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,16 +9,22 @@ import android.widget.CheckBox;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import fr.isep.morning_routine.MainActivity;
 import fr.isep.morning_routine.Model.TasksToDoModel;
+import fr.isep.morning_routine.ObjectSerializer;
 import fr.isep.morning_routine.R;
 
 public class TasksToDoAdapter extends RecyclerView.Adapter<TasksToDoAdapter.ViewHolder> {
 
     private List<TasksToDoModel> tasksToDoList;
+    private MainActivity activity;
 
     public TasksToDoAdapter() {
         this.tasksToDoList = new ArrayList<>();
@@ -46,12 +54,15 @@ public class TasksToDoAdapter extends RecyclerView.Adapter<TasksToDoAdapter.View
         notifyDataSetChanged();
     }
 
-    //Add tasks in list
-    public void addTaskToDo(TasksToDoModel tasksToDoList){
-        this.tasksToDoList.add(tasksToDoList);
-        //in order to update the recyclerView
-        notifyDataSetChanged();
+    public Context getContext(){return activity;}
+
+    public void deleteToDoTask( int position) throws IOException {
+        TasksToDoModel item = tasksToDoList.get(position);
+        tasksToDoList.remove(position);
+        notifyItemRemoved(position);
+
     }
+
 
     //The recyclerView will get the number of item it has to print
     public int getItemCount(){

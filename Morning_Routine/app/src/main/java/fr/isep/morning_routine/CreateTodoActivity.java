@@ -1,9 +1,12 @@
 package fr.isep.morning_routine;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,9 +20,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import fr.isep.morning_routine.Adapter.TasksToDoAdapter;
 import fr.isep.morning_routine.Model.TasksToDoModel;
 
 
@@ -60,6 +66,7 @@ public class CreateTodoActivity extends AppCompatActivity {
             setResult(RESULT_OK,intent);
             finish();
         } else {
+            System.out.println("Erreur : champ vide");
             //TODO : display Popup here
         }
     }
@@ -77,39 +84,11 @@ public class CreateTodoActivity extends AppCompatActivity {
     }
 
 
+
     //Convert Edittext to String
     private String ConvertToString(EditText text) {
         return text.getText().toString();
     }
 
-
-    //Display when nothing is written and user try to add task.
-    public void onErrorShowPopupClick(View view) {
-
-        // inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater)
-                getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.activity_popup, null);
-
-        // create the popup window
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        //in order to delete popup when clicked outside
-        boolean focusable = true;
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-        // show the popup window
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-        // make quit the popup window when touched
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return true;
-            }
-        });
-
-    }
 
 }

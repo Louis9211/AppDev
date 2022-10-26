@@ -5,6 +5,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         tasksToDoAdapter = new TasksToDoAdapter();
         tasksRecyclerView.setAdapter(tasksToDoAdapter);
 
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(tasksToDoAdapter));
+        itemTouchHelper.attachToRecyclerView(tasksRecyclerView);
+
         loadTodoFromMemory();
 
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingActionButton);
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         }
         tasksToDoAdapter.setTasksToDo(tasksToDoList);
     }
+
 
 
     protected void switchCreateTodoActivity() {
