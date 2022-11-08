@@ -47,7 +47,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
         if (direction == ItemTouchHelper.LEFT) {
-            alertDialogDeleteItem(viewHolder);
+            alertDialogDeleteItem(viewHolder, viewHolder.getAdapterPosition());
         } else {
             this.handleModify.run(this.adapter.getContext(), viewHolder.getAdapterPosition());
             adapter.notifyItemChanged(viewHolder.getAdapterPosition());
@@ -55,7 +55,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     }
 
 
-    private void alertDialogDeleteItem(final RecyclerView.ViewHolder viewHolder) {
+    private void alertDialogDeleteItem(final RecyclerView.ViewHolder viewHolder, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.adapter.getContext());
         builder.setTitle("Supprimer la tâche");
         builder.setMessage("Voulez-vous vraiment supprimer cette tâche ?");
@@ -65,10 +65,12 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
                 SharedPreferences sharedPref = adapter.getContext().getSharedPreferences("application", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 Set<String> stringSet = sharedPref.getStringSet("tasks", new HashSet<>());
-
+                System.out.println(stringSet.toArray().length);
                 Set<String> newStringSet = new HashSet<String>(stringSet);
                 Object[] objects = newStringSet.toArray();
-                newStringSet.remove(objects[viewHolder.getAdapterPosition()]);
+                newStringSet.remove(objects[position]);
+                editor.putStringSet("tasks", newStringSet);
+                editor.apply();
                 adapter.notifyItemChanged(viewHolder.getAdapterPosition());
             } catch (IOException e) {
                 e.printStackTrace();
