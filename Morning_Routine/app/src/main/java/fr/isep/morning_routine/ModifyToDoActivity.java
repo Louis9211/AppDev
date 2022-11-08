@@ -91,8 +91,8 @@ public class ModifyToDoActivity extends AppCompatActivity {
         Set<String> stringSet = sharedPref.getStringSet("tasks", new HashSet<>());
 
         Set<String> newStringSet = new HashSet<String>(stringSet);
-        Object[] stringArray = newStringSet.toArray();
-        newStringSet.remove(stringArray[this.elementId]);
+        Object[] objects = newStringSet.toArray();
+        newStringSet.remove(objects[this.elementId]);
         newStringSet.add(ObjectSerializer.serialize(taskToEdit));
 
         editor.putStringSet("tasks", newStringSet);

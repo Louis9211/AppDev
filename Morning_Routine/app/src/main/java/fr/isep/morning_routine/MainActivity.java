@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent switchActivityIntent = new Intent(context, ModifyToDoActivity.class);
                 switchActivityIntent.putExtra("key", id);
-                startActivity(switchActivityIntent);
+                someActivityResultLauncher.launch(switchActivityIntent);
 
             }
         }));
