@@ -51,6 +51,9 @@ public class ModifyToDoActivity extends AppCompatActivity {
         if (extras != null)
             this.elementId = extras.getInt("key");
 
+        TasksToDoModel task = loadTodoFromMemory(this.elementId);
+        fillTodoForm(task);
+
         Button newTodoButton = findViewById(R.id.newToDoButton);
         newTodoButton.setOnClickListener(v -> {
             try {
@@ -66,12 +69,10 @@ public class ModifyToDoActivity extends AppCompatActivity {
         TimePicker startingTimeInput = findViewById(R.id.newTodoStartingHour);
         TimePicker endingTimeInput = findViewById(R.id.newTodoEndingHour);
         EditText applicationNameInput = findViewById(R.id.newToDoApplicationName);
-
         String taskName = ConvertToString(nameInput);
         String taskStartingTime = startingTimeInput.getHour() + ":" + startingTimeInput.getMinute();
         String taskEndingTime = endingTimeInput.getHour() + ":" + endingTimeInput.getMinute();
         String applicationName = ConvertToString(applicationNameInput);
-
         if (taskName.length() != 0) {
             TasksToDoModel tasksTodo = new TasksToDoModel(1, 0, taskName, taskStartingTime, taskEndingTime, applicationName);
             editTodoTask(tasksTodo);
@@ -97,6 +98,25 @@ public class ModifyToDoActivity extends AppCompatActivity {
 
         editor.putStringSet("tasks", newStringSet);
         editor.apply();
+    }
+
+    private void fillTodoForm(TasksToDoModel task) {
+        EditText nameInput = findViewById(R.id.newTodoName);
+        TimePicker startingTimeInput = findViewById(R.id.newTodoStartingHour);
+        TimePicker endingTimeInput = findViewById(R.id.newTodoEndingHour);
+        EditText applicationNameInput = findViewById(R.id.newToDoApplicationName);
+        nameInput.setText(task.getTask());
+
+        String[] startingTime = task.getStartingTime().split(":");
+        startingTimeInput.setHour(Integer.parseInt(startingTime[0]));
+        startingTimeInput.setMinute(Integer.parseInt(startingTime[1]));
+
+        String[] endingTime = task.getEndingTime().split(":");
+        endingTimeInput.setHour(Integer.parseInt(endingTime[0]));
+        endingTimeInput.setMinute(Integer.parseInt(endingTime[1]));
+        System.out.println(Arrays.toString(startingTime));
+        System.out.println(Arrays.toString(endingTime));
+        applicationNameInput.setText(task.getApplicationName());
     }
 
     protected TasksToDoModel loadTodoFromMemory(int id) {

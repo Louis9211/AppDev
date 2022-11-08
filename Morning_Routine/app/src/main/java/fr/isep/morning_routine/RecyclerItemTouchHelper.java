@@ -41,8 +41,8 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         if (direction == ItemTouchHelper.LEFT) {
             alertDialogDeleteItem(viewHolder);
         } else {
-            Intent switchActivityIntent = new Intent(this.adapter.getContext(), CreateTodoActivity.class);
             this.handleModify.run(this.adapter.getContext(), viewHolder.getAdapterPosition());
+            adapter.notifyItemChanged(viewHolder.getAdapterPosition());
         }
     }
 
@@ -59,12 +59,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
                 e.printStackTrace();
             }
         });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                adapter.notifyItemChanged(viewHolder.getAdapterPosition());
-            }
-        });
+        builder.setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> adapter.notifyItemChanged(viewHolder.getAdapterPosition()));
         AlertDialog dialog = builder.create();
         dialog.show();
     }
