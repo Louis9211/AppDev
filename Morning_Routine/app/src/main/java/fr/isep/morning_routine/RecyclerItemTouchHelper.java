@@ -2,23 +2,31 @@ package fr.isep.morning_routine;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import fr.isep.morning_routine.Adapter.TasksToDoAdapter;
+import fr.isep.morning_routine.Model.TasksToDoModel;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
@@ -54,6 +62,13 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         builder.setPositiveButton("Supprimer", (dialogInterface, i) -> {
             try {
                 this.adapter.deleteToDoTask((int) viewHolder.getAdapterPosition());
+                SharedPreferences sharedPref = adapter.getContext().getSharedPreferences("application", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                Set<String> stringSet = sharedPref.getStringSet("tasks", new HashSet<>());
+
+                Set<String> newStringSet = new HashSet<String>(stringSet);
+                Object[] objects = newStringSet.toArray();
+                newStringSet.remove(objects[viewHolder.getAdapterPosition()]);
                 adapter.notifyItemChanged(viewHolder.getAdapterPosition());
             } catch (IOException e) {
                 e.printStackTrace();
