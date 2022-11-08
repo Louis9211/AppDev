@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
 import java.util.function.ToDoubleBiFunction;
 
 import fr.isep.morning_routine.Adapter.TasksToDoAdapter;
@@ -27,6 +28,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+
         return false;
     }
 
@@ -43,15 +45,16 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
 
     private void alertDialogDeleteItem(final RecyclerView.ViewHolder viewHolder) {
-        System.out.println(this.adapter.getContext());
-        System.out.println("ok");
         AlertDialog.Builder builder = new AlertDialog.Builder(this.adapter.getContext());
         builder.setTitle("Supprimer la tâche");
         builder.setMessage("Voulez-vous vraiment supprimer cette tâche ?");
-        builder.setPositiveButton("Supprimer", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //TODO supprimer tâche
+        builder.setPositiveButton("Supprimer", (dialogInterface, i) -> {
+            try {
+                System.out.println();
+                this.adapter.deleteToDoTask((int) viewHolder.getAdapterPosition());
+                adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -71,7 +74,6 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         ColorDrawable background;
         int BackgroundCornerOffset = 20;
         View itemView = viewHolder.itemView;
-        System.out.println(horizontalDistance);
         if(horizontalDistance>0){
             background = new ColorDrawable(Color.CYAN);
         }
