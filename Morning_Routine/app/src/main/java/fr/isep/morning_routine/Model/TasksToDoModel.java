@@ -8,11 +8,19 @@ public class TasksToDoModel implements Serializable {
     private int id;
     private int status;
     private String task;
-    //private String duration;
+    private String startingTime;
+    private String endingTime;
+    private String applicationName;
 
-    //public String getDuration() {return duration;}
+    public TasksToDoModel(int id, int status, String task, String startingTime, String endingTime, String applicationName) {
+        this.id = id;
+        this.status = status;
+        this.task = task;
+        this.startingTime = startingTime;
+        this.endingTime = endingTime;
+        this.applicationName = applicationName;
+    }
 
-    //public void setDuration(String duration) { this.duration = duration;}
 
     public int getId() {
         return id;
@@ -36,5 +44,29 @@ public class TasksToDoModel implements Serializable {
 
     public void setTask(String task) {
         this.task = task;
+    }
+
+    public String getStartingTime() {
+        return startingTime;
+    }
+
+    public void setStartingTime(String startingTime) {
+        this.startingTime = startingTime;
+    }
+
+    public String getEndingTime() {
+        return endingTime;
+    }
+
+    public void setEndingTime(String endingTime) {
+        this.endingTime = endingTime;
+    }
+
+    public String getApplicationName() {
+        return applicationName;
+    }
+
+    public void setApplicationName(String applicationName) {
+        this.applicationName = applicationName;
     }
 }

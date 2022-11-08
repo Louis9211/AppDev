@@ -1,32 +1,16 @@
 package fr.isep.morning_routine;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TimePicker;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-import fr.isep.morning_routine.Adapter.TasksToDoAdapter;
 import fr.isep.morning_routine.Model.TasksToDoModel;
 
 
@@ -56,17 +40,18 @@ public class CreateTodoActivity extends AppCompatActivity {
 
     private void onSubmitForm() throws IOException {
         EditText nameInput = findViewById(R.id.newTodoName);
-        TimePicker durationInput = findViewById(R.id.newTodoStartingHour);
+        TimePicker startingTimeInput = findViewById(R.id.newTodoStartingHour);
+        TimePicker endingTimeInput = findViewById(R.id.newTodoEndingHour);
+        EditText applicationNameInput = findViewById(R.id.newToDoApplicationName);
+
         String taskName = ConvertToString(nameInput);
-        String taskDuration = durationInput.getHour() + ":" + durationInput.getMinute();
+        String taskStartingTime = startingTimeInput.getHour() + ":" + startingTimeInput.getMinute();
+        String taskEndingTime = endingTimeInput.getHour() + ":" + endingTimeInput.getMinute();
+        String applicationName = ConvertToString(applicationNameInput);
 
         if (taskName.length() != 0) {
-            System.out.println("Champ name rempli");
 
-            TasksToDoModel tasksTodo = new TasksToDoModel();
-            tasksTodo.setStatus(0);
-            tasksTodo.setTask(taskName);
-            tasksTodo.setId(10);
+            TasksToDoModel tasksTodo = new TasksToDoModel(1, 0, taskName, taskStartingTime, taskEndingTime, applicationName);
             storeToDoTask(tasksTodo);
             Intent intent = new Intent();
             intent.putExtra("newTask", ObjectSerializer.serialize(tasksTodo));
