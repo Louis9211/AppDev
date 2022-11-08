@@ -6,15 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -42,16 +39,12 @@ public class MainActivity extends AppCompatActivity {
         tasksToDoAdapter = new TasksToDoAdapter(this);
         tasksRecyclerView.setAdapter(tasksToDoAdapter);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(tasksToDoAdapter, new StartActivity() {
-            @Override
-            public void run(Context context, int id) {
-
-                Intent switchActivityIntent = new Intent(context, ModifyToDoActivity.class);
-                switchActivityIntent.putExtra("key", id);
-                someActivityResultLauncher.launch(switchActivityIntent);
-
-            }
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(tasksToDoAdapter, (context, id) -> {
+            Intent switchActivityIntent = new Intent(context, ModifyToDoActivity.class);
+            switchActivityIntent.putExtra("key", id);
+            someActivityResultLauncher.launch(switchActivityIntent);
         }));
+
         itemTouchHelper.attachToRecyclerView(tasksRecyclerView);
 
         loadTodoFromMemory();

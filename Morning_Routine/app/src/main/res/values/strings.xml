@@ -13,5 +13,6 @@
     <string name="add_todo_start_hour_placeholder">Heure de début</string>
     <string name="starting_hour_label">Heure de début</string>
     <string name="ending_hour_label">Heure de fin</string>
-    <string name="application_to_launch">Application à lancer</string>
+    <string name="application_to_launch">com.github.android</string>
+    <string name="play">play</string>
 </resources>
