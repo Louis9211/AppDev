@@ -1,34 +1,36 @@
 package fr.isep.morning_routine;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 
-import androidx.core.content.ContextCompat;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
-import java.util.function.ToDoubleBiFunction;
 
 import fr.isep.morning_routine.Adapter.TasksToDoAdapter;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     private TasksToDoAdapter adapter;
+    private StartActivity handleModify;
 
-    public RecyclerItemTouchHelper(TasksToDoAdapter adapter) {
+    public RecyclerItemTouchHelper(TasksToDoAdapter adapter, StartActivity handleModify) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.adapter = adapter;
+        this.handleModify = handleModify;
     }
 
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-
         return false;
     }
 
@@ -37,9 +39,11 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         if (direction == ItemTouchHelper.LEFT) {
             alertDialogDeleteItem(viewHolder);
         } else {
-
+            Intent switchActivityIntent = new Intent(this.adapter.getContext(), CreateTodoActivity.class);
+            this.handleModify.run(this.adapter.getContext());
         }
     }
+
 
 
     private void alertDialogDeleteItem(final RecyclerView.ViewHolder viewHolder) {
@@ -71,21 +75,18 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         ColorDrawable background;
         int BackgroundCornerOffset = 20;
         View itemView = viewHolder.itemView;
-        if(horizontalDistance>0){
+        if (horizontalDistance > 0) {
             background = new ColorDrawable(Color.CYAN);
-        }
-        else{
+        } else {
             background = new ColorDrawable(Color.RED);
         }
         if (horizontalDistance > 0) {
-            background.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + ((int)horizontalDistance) + BackgroundCornerOffset, itemView.getBottom());
+            background.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + ((int) horizontalDistance) + BackgroundCornerOffset, itemView.getBottom());
         } else if (horizontalDistance < 0) {
             background.setBounds(itemView.getRight() + ((int) horizontalDistance) + BackgroundCornerOffset, itemView.getTop(), itemView.getRight(), itemView.getBottom());
-        }
-        else{
-            background.setBounds(0,0,0,0);
+        } else {
+            background.setBounds(0, 0, 0, 0);
         }
         background.draw(canvas);
-
     }
 }

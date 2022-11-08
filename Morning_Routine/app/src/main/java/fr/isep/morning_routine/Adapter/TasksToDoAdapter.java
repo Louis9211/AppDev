@@ -57,13 +57,11 @@ public class TasksToDoAdapter extends RecyclerView.Adapter<TasksToDoAdapter.View
 
     public Context getContext(){return activity;}
 
-    public void deleteToDoTask( int position) throws IOException {
+    public void deleteToDoTask(int position) throws IOException {
         TasksToDoModel item = tasksToDoList.get(position);
         tasksToDoList.remove(position);
         notifyItemRemoved(position);
-
     }
-
 
     //The recyclerView will get the number of item it has to print
     public int getItemCount(){
