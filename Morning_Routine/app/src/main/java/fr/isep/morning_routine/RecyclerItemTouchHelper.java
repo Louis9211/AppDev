@@ -50,7 +50,6 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         builder.setMessage("Voulez-vous vraiment supprimer cette tâche ?");
         builder.setPositiveButton("Supprimer", (dialogInterface, i) -> {
             try {
-                System.out.println();
                 this.adapter.deleteToDoTask((int) viewHolder.getAdapterPosition());
                 adapter.notifyItemChanged(viewHolder.getAdapterPosition());
             } catch (IOException e) {

@@ -14,9 +14,9 @@
         android:layout_marginTop="50dp"
         android:text="@string/add_todo_title"
         android:textAlignment="center"
-        android:textStyle="bold"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,29 +34,101 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
+    <LinearLayout
+        android:id="@+id/hourPickerLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newTodoName"
+        android:layout_marginTop="50dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/StartingHourPickerLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/newTodoName">
+
+            <TextView
+                android:id="@+id/textViewStartingHour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/starting_hour_label"
+                android:textSize="16dp" />
+
+            <TimePicker
+                android:id="@+id/newTodoStartingHour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/add_todo_start_hour_placeholder"
+                android:paddingHorizontal="5dp"
+                android:timePickerMode="spinner"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/EndingHourPickerLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/StartingHourPickerLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/newTodoName">
+
+            <TextView
+                android:id="@+id/textViewEndingHour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/ending_hour_label"
+                android:textSize="16dp" />
+
+            <TimePicker
+                android:id="@+id/newTodoEndingHour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/add_todo_duration_placeholder"
+                android:paddingHorizontal="5dp"
+                android:timePickerMode="spinner"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
     <EditText
-        android:id="@+id/newTodoDuration"
+        android:id="@+id/newToDoApplicationName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:autofillHints="time"
-        android:hint="@string/add_todo_duration_placeholder"
-        android:inputType="time"
+        android:ems="10"
+        android:inputType="text"
+        android:autofillHints="name"
+        android:hint="@string/application_to_launch"
         android:paddingHorizontal="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newTodoName" />
+        app:layout_constraintTop_toBottomOf="@+id/hourPickerLayout"
+         />
+
+
 
     <Button
         android:id="@+id/newToDoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="@string/add_todo_add_button"
-        android:textStyle="bold"
+        android:layout_marginTop="108dp"
         android:backgroundTint="@android:color/holo_blue_dark"
+        android:text="@string/add_todo_add_button"
         android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.801"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newTodoDuration" />
+        app:layout_constraintTop_toBottomOf="@+id/newToDoApplicationName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

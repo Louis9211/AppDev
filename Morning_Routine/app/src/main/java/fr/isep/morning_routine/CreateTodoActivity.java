@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TimePicker;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,6 +38,12 @@ public class CreateTodoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_todo);
         getSupportActionBar().hide();
 
+        TimePicker startingHour = findViewById(R.id.newTodoStartingHour);
+        startingHour.setIs24HourView(true);
+
+        TimePicker endingHour = findViewById(R.id.newTodoEndingHour);
+        endingHour.setIs24HourView(true);
+
         Button newTodoButton = findViewById(R.id.newToDoButton);
         newTodoButton.setOnClickListener(v -> {
             try {
@@ -49,9 +56,9 @@ public class CreateTodoActivity extends AppCompatActivity {
 
     private void onSubmitForm() throws IOException {
         EditText nameInput = findViewById(R.id.newTodoName);
-        EditText durationInput = findViewById(R.id.newTodoDuration);
+        TimePicker durationInput = findViewById(R.id.newTodoStartingHour);
         String taskName = ConvertToString(nameInput);
-        String taskDuration = ConvertToString(durationInput);
+        String taskDuration = durationInput.getHour() + ":" + durationInput.getMinute();
 
         if (taskName.length() != 0) {
             System.out.println("Champ name rempli");
