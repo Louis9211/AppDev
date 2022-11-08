@@ -29,7 +29,13 @@ import fr.isep.morning_routine.Adapter.TasksToDoAdapter;
 import fr.isep.morning_routine.Model.TasksToDoModel;
 
 
-public class CreateTodoActivity extends AppCompatActivity {
+public class ModifyToDoActivity extends AppCompatActivity {
+
+    private TasksToDoAdapter adapter;
+
+    public ModifyToDoActivity() {
+        this.adapter = adapter;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +76,10 @@ public class CreateTodoActivity extends AppCompatActivity {
         }
     }
 
+    public void modifyToDo(final RecyclerView.ViewHolder viewHolder){
+        adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+    }
+
     private void storeToDoTask(TasksToDoModel taskToAppend) throws IOException {
         SharedPreferences sharedPref = getSharedPreferences("application", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -81,7 +91,6 @@ public class CreateTodoActivity extends AppCompatActivity {
         editor.putStringSet("tasks", newStringSet);
         editor.apply();
     }
-
 
 
     //Convert Edittext to String

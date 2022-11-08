@@ -1,7 +1,5 @@
 package fr.isep.morning_routine;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView tasksRecyclerView;
     private TasksToDoAdapter tasksToDoAdapter;
-
     private List<TasksToDoModel> tasksToDoList;
 
     @Override
@@ -45,7 +42,15 @@ public class MainActivity extends AppCompatActivity {
         tasksToDoAdapter = new TasksToDoAdapter(this);
         tasksRecyclerView.setAdapter(tasksToDoAdapter);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(tasksToDoAdapter));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(tasksToDoAdapter, new StartActivity() {
+            @Override
+            public void run(Context context) {
+
+                Intent switchActivityIntent = new Intent(context, ModifyToDoActivity.class);
+                startActivity(switchActivityIntent);
+
+            }
+        }));
         itemTouchHelper.attachToRecyclerView(tasksRecyclerView);
 
         loadTodoFromMemory();
