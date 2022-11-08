@@ -40,7 +40,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
             alertDialogDeleteItem(viewHolder);
         } else {
             Intent switchActivityIntent = new Intent(this.adapter.getContext(), CreateTodoActivity.class);
-            this.handleModify.run(this.adapter.getContext());
+            this.handleModify.run(this.adapter.getContext(), viewHolder.getAdapterPosition());
         }
     }
 

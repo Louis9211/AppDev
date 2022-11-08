@@ -44,9 +44,10 @@ public class MainActivity extends AppCompatActivity {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(tasksToDoAdapter, new StartActivity() {
             @Override
-            public void run(Context context) {
+            public void run(Context context, int id) {
 
                 Intent switchActivityIntent = new Intent(context, ModifyToDoActivity.class);
+                switchActivityIntent.putExtra("key", id);
                 startActivity(switchActivityIntent);
 
             }

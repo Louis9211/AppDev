@@ -18,9 +18,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TimePicker;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,9 +34,11 @@ import fr.isep.morning_routine.Model.TasksToDoModel;
 public class ModifyToDoActivity extends AppCompatActivity {
 
     private TasksToDoAdapter adapter;
+    private String elementId;
 
     public ModifyToDoActivity() {
         this.adapter = adapter;
+        this.elementId = "";
     }
 
     @Override
@@ -42,6 +46,9 @@ public class ModifyToDoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_todo);
         getSupportActionBar().hide();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+           this.elementId = extras.getString("key");
 
         Button newTodoButton = findViewById(R.id.newToDoButton);
         newTodoButton.setOnClickListener(v -> {
@@ -55,17 +62,18 @@ public class ModifyToDoActivity extends AppCompatActivity {
 
     private void onSubmitForm() throws IOException {
         EditText nameInput = findViewById(R.id.newTodoName);
-        EditText durationInput = findViewById(R.id.newTodoDuration);
+        TimePicker startingTimeInput = findViewById(R.id.newTodoStartingHour);
+        TimePicker endingTimeInput = findViewById(R.id.newTodoEndingHour);
+        EditText applicationNameInput = findViewById(R.id.newToDoApplicationName);
+
         String taskName = ConvertToString(nameInput);
-        String taskDuration = ConvertToString(durationInput);
+        String taskStartingTime = startingTimeInput.getHour() + ":" + startingTimeInput.getMinute();
+        String taskEndingTime = endingTimeInput.getHour() + ":" + endingTimeInput.getMinute();
+        String applicationName = ConvertToString(applicationNameInput);
 
         if (taskName.length() != 0) {
-            System.out.println("Champ name rempli");
-            TasksToDoModel tasksTodo = new TasksToDoModel();
-            tasksTodo.setStatus(0);
-            tasksTodo.setTask(taskName);
-            tasksTodo.setId(10);
-            storeToDoTask(tasksTodo);
+            TasksToDoModel tasksTodo = new TasksToDoModel(1, 0, taskName, taskStartingTime, taskEndingTime, applicationName);
+            editTodoTask(tasksTodo);
             Intent intent = new Intent();
             intent.putExtra("newTask", ObjectSerializer.serialize(tasksTodo));
             setResult(RESULT_OK,intent);
@@ -76,21 +84,38 @@ public class ModifyToDoActivity extends AppCompatActivity {
         }
     }
 
-    public void modifyToDo(final RecyclerView.ViewHolder viewHolder){
-        adapter.notifyItemChanged(viewHolder.getAdapterPosition());
-    }
-
-    private void storeToDoTask(TasksToDoModel taskToAppend) throws IOException {
+    private void editTodoTask(TasksToDoModel taskToEdit) throws IOException {
         SharedPreferences sharedPref = getSharedPreferences("application", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         Set<String> stringSet = sharedPref.getStringSet("tasks", new HashSet<>());
 
         Set<String> newStringSet = new HashSet<String>(stringSet);
-        newStringSet.add(ObjectSerializer.serialize(taskToAppend));
+        String[] stringArray = (String[]) newStringSet.toArray();
+        newStringSet.remove(stringArray[Integer.parseInt(this.elementId)]);
+        newStringSet.add(ObjectSerializer.serialize(taskToEdit));
 
         editor.putStringSet("tasks", newStringSet);
         editor.apply();
     }
+
+    protected TasksToDoModel loadTodoFromMemory(int id) {
+        SharedPreferences sharedPref = getSharedPreferences("application", Context.MODE_PRIVATE);
+        Set<String> stringSet = sharedPref.getStringSet("tasks", new HashSet<>());
+        List<TasksToDoModel> tasksToDoList = new ArrayList<>();
+
+        for (String string: stringSet) {
+            try {
+                TasksToDoModel deserializedElement = (TasksToDoModel) ObjectSerializer.deserialize(string);
+                tasksToDoList.add(deserializedElement);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return tasksToDoList.get(id);
+    }
+
+
 
 
     //Convert Edittext to String
