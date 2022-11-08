@@ -34,12 +34,10 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-        final int swipedDirection = viewHolder.getAdapterPosition();
         if (direction == ItemTouchHelper.LEFT) {
             alertDialogDeleteItem(viewHolder);
         } else {
 
-            //TODO edit item
         }
     }
 
