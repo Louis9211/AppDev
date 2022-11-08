@@ -10,4 +10,8 @@
     <string name="add_app_name">Heyoo</string>
     <string name="add_UnderTitle">Make Morning Routine Great Again</string>
     <string name="add_popup">Veuillez remplir les champs manquants !</string>
+    <string name="add_todo_start_hour_placeholder">Heure de début</string>
+    <string name="starting_hour_label">Heure de début</string>
+    <string name="ending_hour_label">Heure de fin</string>
+    <string name="application_to_launch">Application à lancer</string>
 </resources>
