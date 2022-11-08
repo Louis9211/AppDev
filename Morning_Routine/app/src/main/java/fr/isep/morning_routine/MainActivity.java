@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        tasksToDoAdapter = new TasksToDoAdapter();
+        tasksToDoAdapter = new TasksToDoAdapter(this);
         tasksRecyclerView.setAdapter(tasksToDoAdapter);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(tasksToDoAdapter));

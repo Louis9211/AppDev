@@ -43,7 +43,9 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
 
     private void alertDialogDeleteItem(final RecyclerView.ViewHolder viewHolder) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(adapter.getContext());
+        System.out.println(this.adapter.getContext());
+        System.out.println("ok");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.adapter.getContext());
         builder.setTitle("Supprimer la tâche");
         builder.setMessage("Voulez-vous vraiment supprimer cette tâche ?");
         builder.setPositiveButton("Supprimer", new DialogInterface.OnClickListener() {

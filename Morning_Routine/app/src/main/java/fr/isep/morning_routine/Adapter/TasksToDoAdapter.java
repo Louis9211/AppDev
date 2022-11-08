@@ -26,7 +26,8 @@ public class TasksToDoAdapter extends RecyclerView.Adapter<TasksToDoAdapter.View
     private List<TasksToDoModel> tasksToDoList;
     private MainActivity activity;
 
-    public TasksToDoAdapter() {
+    public TasksToDoAdapter(MainActivity activity) {
+        this.activity = activity;
         this.tasksToDoList = new ArrayList<>();
     }
 
