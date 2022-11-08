@@ -34,6 +34,7 @@ public class ObjectSerializer {
         }
     }
 
+
     public static String encodeBytes(byte[] bytes) {
         StringBuffer strBuf = new StringBuffer();
 
