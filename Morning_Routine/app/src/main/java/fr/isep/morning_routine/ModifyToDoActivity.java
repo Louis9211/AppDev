@@ -34,11 +34,11 @@ import fr.isep.morning_routine.Model.TasksToDoModel;
 public class ModifyToDoActivity extends AppCompatActivity {
 
     private TasksToDoAdapter adapter;
-    private String elementId;
+    private int elementId;
 
     public ModifyToDoActivity() {
         this.adapter = adapter;
-        this.elementId = "";
+        this.elementId = -1;
     }
 
     @Override
@@ -46,9 +46,10 @@ public class ModifyToDoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_todo);
         getSupportActionBar().hide();
+
         Bundle extras = getIntent().getExtras();
         if (extras != null)
-           this.elementId = extras.getString("key");
+            this.elementId = extras.getInt("key");
 
         Button newTodoButton = findViewById(R.id.newToDoButton);
         newTodoButton.setOnClickListener(v -> {
@@ -90,8 +91,8 @@ public class ModifyToDoActivity extends AppCompatActivity {
         Set<String> stringSet = sharedPref.getStringSet("tasks", new HashSet<>());
 
         Set<String> newStringSet = new HashSet<String>(stringSet);
-        String[] stringArray = (String[]) newStringSet.toArray();
-        newStringSet.remove(stringArray[Integer.parseInt(this.elementId)]);
+        Object[] stringArray = newStringSet.toArray();
+        newStringSet.remove(stringArray[this.elementId]);
         newStringSet.add(ObjectSerializer.serialize(taskToEdit));
 
         editor.putStringSet("tasks", newStringSet);
