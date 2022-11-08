@@ -32,19 +32,15 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-        final int swipedDirection = viewHolder.getAdapterPosition();
         if (direction == ItemTouchHelper.LEFT) {
             alertDialogDeleteItem(viewHolder);
         } else {
 
-            //TODO edit item
         }
     }
 
 
     private void alertDialogDeleteItem(final RecyclerView.ViewHolder viewHolder) {
-        System.out.println(this.adapter.getContext());
-        System.out.println("ok");
         AlertDialog.Builder builder = new AlertDialog.Builder(this.adapter.getContext());
         builder.setTitle("Supprimer la tâche");
         builder.setMessage("Voulez-vous vraiment supprimer cette tâche ?");
