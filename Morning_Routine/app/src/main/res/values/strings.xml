@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Morning_Routine</string>
+    <string name="app_name">Morning Routine</string>
     <string name="add_todo_title">Ajoute une tâche à ta routine !</string>
     <string name="add_todo_name_placeholder">Avoir un T-shirt GitHub gratuit</string>
     <string name="add_todo_add_button">Ajouter</string>
@@ -8,6 +8,7 @@
     <string name="add_UnderTitle">Make Morning Routine Great Again</string>
     <string name="add_popup">Veuillez remplir les champs manquants !</string>
     <string name="add_todo_start_hour_placeholder">Heure de début</string>
+    <string name="add_todo_duration_placeholder">Heure de début</string>
     <string name="starting_hour_label">Heure de début</string>
     <string name="ending_hour_label">Heure de fin</string>
     <string name="application_to_launch">com.github.android</string>
